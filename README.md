@@ -12,6 +12,7 @@ All folders must be located under the same root directory, let's say `ws`.
 * `winsoft-close`: clone of `winsoft-main`, but containing software specific to your site.
   The definitions and names of the packages are not public.
   Each site has its own forge and there is no inter-site collaboration on these recipes.
+  If you do not like the name `winsoft-close`, you can choose `winsoft-local` or any name beginning with `winsoft-`.
 
 * `winsoft-loop`: mini folder for launching actions on all `winsoft-*` repositories.
   We have mentioned `main` and `close`, but there is nothing to stop you from creating as many as you want.
