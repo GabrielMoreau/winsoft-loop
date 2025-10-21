@@ -1,6 +1,6 @@
 PKGDIR:=$(filter-out ../winsoft-conf ../winsoft-loop, $(wildcard ../winsoft-*))
 
-.PHONY: help all build-all clean-all last-checksum unrealized-updates list-pkg list-version list-md space version git-status git-pull git-push git-push-all
+.PHONY: help all build-all clean-all last-checksum unrealized-updates list-pkg list-version list-md space version git-status git-pull git-push git-push-all ocs-push ocs-push-all
 .ONESHELL:
 
 help: ## show this help
@@ -92,7 +92,13 @@ git-push-all: ## git push all files
 		(cd $$d; git commit -a; git push) \
 	done
 
-ocs-push: ## push package on ocs server
+ocs-push: ## push last package on ocs server
+	@for d in $(PKGDIR) ; \
+	do \
+		(cd $$d; make --quiet $@) \
+	done
+
+ocs-push-all: ## push all package on ocs server
 	@for d in $(PKGDIR) ; \
 	do \
 		(cd $$d; make --quiet $@) \
