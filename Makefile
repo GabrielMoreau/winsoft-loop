@@ -20,7 +20,7 @@ clean-all: ## clean all package
 		(cd $$d; make --quiet $@) \
 	done
 
-last-checksum: ## check for new checksum package
+last-checksum: ## check for new checksum package (TIMEWINDOW var)
 	@for d in $(PKGDIR) ; \
 	do \
 		(cd $$d; make --quiet $@) \
@@ -48,7 +48,7 @@ list-md: ## list all package in markdown format
 	@head --quiet --line 1 ../*/[a-z]*/README.md | egrep -v -i '(Uninstall|Dell SupportAssist|GlobalProtect|OpenJDK8JRE)' | sed -e 's/^#/ 1./;' | sort | \
 		perl -pe 's/(AcrobatReader|AnyConnect|AnyDesk|BleachBit|BlueKenue|CitrixWorkspace|CloudCompare|GitForWindows|FastStone|HandBrake|KiCad|LightBulb|MathWorks|DjVu|OnlyOffice|OpenDocument|OpenShot|RocketChat|SimpleTruss|TeamViewer|TexMaker|TeXnicCenter|UltiMaker|VeraCrypt|VisualRedist|WithSecure|WinDirStat|WinMerge)/!$${1}/g;'
 
-space: ## clean old package
+space: ## clean old package (KEEP var)
 	@for d in $(PKGDIR) ; \
 	do \
 		(cd $$d; grep -q "$@:" Makefile && make --quiet $@) \
@@ -86,13 +86,13 @@ git-push: ## git push update type file (checksum, url, version)
 		)
 	done
 
-git-push-all: ## git push all files
+git-push-all: ## git push all files (.no-ocs-pkgpush file)
 	@for d in ./ $(PKGDIR) ; \
 	do \
 		(cd $$d; git commit -a; git push) \
 	done
 
-ocs-push: ## push last package on ocs server
+ocs-push: ## push last package on ocs server (TIMEWINDOW var, .no-ocs-pkgpush file)
 	@for d in $(PKGDIR) ; \
 	do \
 		(cd $$d; make --quiet $@) \
