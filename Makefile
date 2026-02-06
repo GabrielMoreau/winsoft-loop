@@ -1,6 +1,6 @@
 PKGDIR:=$(filter-out ../winsoft-conf ../winsoft-loop, $(wildcard ../winsoft-*))
 
-.PHONY: help all build-all clean-all last-checksum unrealized-updates list-pkg list-version list-md space version git-status git-pull git-push git-push-all ocs-push ocs-push-all
+.PHONY: help all build-all clean-all last-checksum unrealized-updates list-pkg list-version list-md quality space version git-status git-pull git-push git-push-all ocs-push ocs-push-all
 .ONESHELL:
 
 help: ## show this help
@@ -47,6 +47,12 @@ list-version: ## list all version
 list-md: ## list all package in markdown format
 	@head --quiet --line 1 ../*/[a-z]*/README.md | egrep -v -i '(Uninstall|Dell SupportAssist|GlobalProtect|OpenJDK8JRE)' | sed -e 's/^#/ 1./;' | sort | \
 		perl -pe 's/(AcrobatReader|AnyConnect|AnyDesk|BleachBit|BlueKenue|CitrixWorkspace|CloudCompare|GitForWindows|FastStone|HandBrake|KiCad|LightBulb|MathWorks|DjVu|OnlyOffice|OpenDocument|OpenShot|RocketChat|SimpleTruss|TeamViewer|TexMaker|TeXnicCenter|UltiMaker|VeraCrypt|VisualRedist|WithSecure|WinDirStat|WinMerge)/!$${1}/g;'
+
+quality: ## check code quality
+	@for d in $(PKGDIR) ; \
+	do \
+		(cd $$d; make --quiet $@) \
+	done
 
 space: ## clean old package (KEEP var)
 	@for d in $(PKGDIR) ; \
