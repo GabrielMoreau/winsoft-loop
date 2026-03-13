@@ -85,8 +85,15 @@ git-push: ## git push update type file (checksum, url, version)
 			cd $$d
 			for soft in $$(git status --porcelain | grep '^[[:space:]]*[AM][[:space:]]' | awk '{print $$2}' | grep -E '/(checksum|version|url).txt$$' | xargs -r dirname | sort -u)
 			do
-				git add $$(git status --porcelain | grep '^[[:space:]]*[AM][[:space:]]' | awk '{print $$2}' | grep -E '/(checksum|version|url).txt$$' | grep "^$$soft/")
-				git commit
+				file=$$(git status --porcelain | grep '^[[:space:]]*[AM][[:space:]]' | awk '{print $$2}' | grep -E '/(checksum|version|url).txt$$' | grep "^$${soft}/")
+				msg=$$(head -1 "$${soft}/README.md" | sed -n 's/^# \(.*\) - .*/\1/p;')
+				echo "$${msg}"
+				read -p " +-> Commit $${file} [Y/n] ? " query
+				if [ "$${query}" != 'n' ] && [ "$${query}" != 'N' ]
+				then
+					git add $$(git status --porcelain | grep '^[[:space:]]*[AM][[:space:]]' | awk '{print $$2}' | grep -E '/(checksum|version|url).txt$$' | grep "^$${soft}/")
+					git commit -m "Update Software: $${msg}"
+				fi
 			done
 			git push
 		)
