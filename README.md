@@ -26,16 +26,18 @@ make help                # show this help
 make all                 # clean old package and build all package
 make build-all           # build all package
 make clean-all           # clean all package
-make last-checksum       # check for new checksum package
+make last-checksum       # check for new checksum package (TIMEWINDOW var)
 make unrealized-updates  # check for unrealized package
 make list-pkg            # list all package
 make list-version        # list all version
 make list-md             # list all package in markdown format
-make space               # clean old package
+make quality             # check code quality
+make space               # clean old package (KEEP var)
 make version             # get all package version
 make git-status          # git status
 make git-pull            # git pull
 make git-push            # git push update type file (checksum, url, version)
-make git-push-all        # git push all files
-make ocs-push            # push package on ocs server
+make git-push-all        # git push all files (.no-ocs-pkgpush file)
+make ocs-push            # push last package on ocs server (TIMEWINDOW var, LOOP var, .no-ocs-pkgpush file)
+make ocs-push-all        # push all package on ocs server
 ```
